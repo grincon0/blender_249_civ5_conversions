@@ -1,10 +1,10 @@
 bl_info = {
-    "name": "Add Bones",
-    "author": "Your Name",
+    "name": "Add Civ 5 Bones",
+    "author": "George Rincon",
     "version": (1, 0),
     "blender": (2, 4, 9),
     "location": "View3D > Tool Shelf > Add Bones",
-    "description": "Adds three bones to the base of the armature",
+    "description": "Adds three bones to the base of the armature - used for enabling proper rendering of unit models in Civilization 5",
     "category": "Rigging"
 }
 
@@ -48,7 +48,7 @@ def add_bones_to_armature(context):
 
 class AddBonesOperator(bpy.types.Operator):
     bl_idname = "object.add_bones"
-    bl_label = "Add Bones"
+    bl_label = "Add Civ 5 Bones"
     bl_description = "Adds three bones to the base of the armature"
     bl_options = {'REGISTER', 'UNDO'}
 

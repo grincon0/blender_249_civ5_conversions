@@ -1,10 +1,10 @@
 bl_info = {
     "name": "Add Civ 5 Bones",
-    "author": "Your Name",
+    "author": "George Rincon",
     "version": (1, 0),
     "blender": (2, 4, 9),
     "location": "View3D > Tool Shelf > Add Bones",
-    "description": "Adds three bones to the base of the armature",
+    "description": "Adds three bones to the base of the armature - used for enabling proper rendering of unit models in Civilization 5",
     "category": "Rigging"
 }
 
