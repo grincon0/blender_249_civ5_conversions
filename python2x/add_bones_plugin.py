@@ -8,6 +8,16 @@ bl_info = {
     "category": "Rigging"
 }
 
+bl_info = {
+    "name": "Add Bones",
+    "author": "Your Name",
+    "version": (1, 0),
+    "blender": (2, 4, 9),
+    "location": "View3D > Tool Shelf > Add Bones",
+    "description": "Adds three bones to the base of the armature",
+    "category": "Rigging"
+}
+
 import bpy
 
 
@@ -48,9 +58,8 @@ def add_bones_to_armature(context):
 
 class AddBonesOperator(bpy.types.Operator):
     bl_idname = "object.add_bones"
-    bl_label = "Add Civ 5 Bones"
+    bl_label = "Add Bones"
     bl_description = "Adds three bones to the base of the armature"
-    bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
         add_bones_to_armature(context)
