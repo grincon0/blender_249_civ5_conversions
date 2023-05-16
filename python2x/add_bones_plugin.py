@@ -1,84 +1,39 @@
-bl_info = {
-    "name": "Add Civ 5 Bones",
-    "author": "George Rincon",
-    "version": (1, 0),
-    "blender": (2, 4, 9),
-    "location": "View3D > Tool Shelf > Add Bones",
-    "description": "Adds three bones to the base of the armature - used for enabling proper rendering of unit models in Civilization 5",
-    "category": "Rigging"
-}
+import Blender
 
-bl_info = {
-    "name": "Add Bones",
-    "author": "Your Name",
-    "version": (1, 0),
-    "blender": (2, 4, 9),
-    "location": "View3D > Tool Shelf > Add Bones",
-    "description": "Adds three bones to the base of the armature",
-    "category": "Rigging"
-}
+# Create three bones
+bone_names = ["adj", "CHARACTER_REORIENT", "BIP"]
 
-import bpy
+# Get the active armature object
+armature = Blender.Object.GetSelected()[0]
+armature.makeEditable()
 
+# Get the root bone of the armature
+root_bone = armature.getData().bones.values()[0]
 
-def add_bones_to_armature(context):
-    # Get the active object (assuming it's an armature)
-    armature = context.active_object
+# Create the three new bones
+bones = []
+for name in bone_names:
+    bone = Blender.Armature.Editbone()
+    bone.name = name
+    bones.append(bone)
 
-    # Get the root bone of the armature
-    root_bone = armature.data.bones.values()[0]  # Assumes the root bone is the first bone in the armature
+# Set the parent-child relationships
+root_bone_name = root_bone.name
 
-    # Create the three new bones
-    bone_names = ["adj", "CHARACTER_REORIENT", "BIP"]
-    bones = []
+# Set adj as a child of the root bone
+bones[0].parent = root_bone_name
 
-    for name in bone_names:
-        bone = armature.data.edit_bones.new(name)
-        bones.append(bone)
+# Set CHARACTER_REORIENT as a child of adj
+bones[1].parent = bone_names[0]
 
-    # Set the parent-child relationships
-    root_bone_name = root_bone.name
+# Set BIP as a child of CHARACTER_REORIENT
+bones[2].parent = bone_names[1]
 
-    # Set adj as a child of the root bone
-    bones[0].parent = root_bone
-    bones[0].use_connect = True
+# Update the armature
+armature.update()
+armature.makeDisplayList()
 
-    # Set CHARACTER_REORIENT as a child of adj
-    bones[1].parent = bones[0]
-    bones[1].use_connect = True
+# Switch back to object mode
+Blender.Scene.GetCurrent().update()
 
-    # Set BIP as a child of CHARACTER_REORIENT
-    bones[2].parent = bones[1]
-    bones[2].use_connect = True
-
-    # Update the armature
-    bpy.ops.object.mode_set(mode='OBJECT')
-    bpy.context.scene.update()
-
-
-class AddBonesOperator(bpy.types.Operator):
-    bl_idname = "object.add_bones"
-    bl_label = "Add Bones"
-    bl_description = "Adds three bones to the base of the armature"
-
-    def execute(self, context):
-        add_bones_to_armature(context)
-        return {'FINISHED'}
-
-
-def menu_func(self, context):
-    self.layout.operator(AddBonesOperator.bl_idname, text="Add Bones")
-
-
-def register():
-    bpy.utils.register_class(AddBonesOperator)
-    bpy.types.VIEW3D_MT_object.append(menu_func)
-
-
-def unregister():
-    bpy.utils.unregister_class(AddBonesOperator)
-    bpy.types.VIEW3D_MT_object.remove(menu_func)
-
-
-if __name__ == "__main__":
-    register()
+print("Bones added successfully!")
