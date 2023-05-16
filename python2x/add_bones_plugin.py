@@ -19,7 +19,6 @@ bl_info = {
 }
 
 import bpy
-import Blender.Operator
 
 
 def add_bones_to_armature(context):
@@ -64,7 +63,7 @@ class AddBonesOperator(bpy.types.Operator):
 
     def execute(self, context):
         add_bones_to_armature(context)
-        return Blender.Operator.Finished()
+        return {'FINISHED'}
 
 
 def menu_func(self, context):
